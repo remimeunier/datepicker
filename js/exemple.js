@@ -6,18 +6,18 @@ var globalMonth = {
 	en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'date invalide']
 };
 
-
-function initBirthDayField(input, target, langue) {
-	var $hiddenInput = $('#'+input);
+(function( $ ){
+  $.fn.initBirthDayField = function() {
+	var $hiddenInput = $(this);
 	var hiddenInputID = $hiddenInput.attr('id');
 	var containerID = hiddenInputID +'-container';
-	var $target = $('#'+ target);
+	var $target = $('#target');
 	var dayInput = '<input class="focus-event date-verification refresh-category" id="day" max="31" min="1" name="day" placeholder="DD" type="number">';
 	var monthInput = '<input class="focus-event date-verification refresh-category" id="month" max="12" min="1" name="month" placeholder="MM" type="number">';
 	var yearInput = '<input class="date-verification refresh-category" id="year" max="2099" min="1" name="year" placeholder="YYYY" type="number">';
 
 	$("<div class='container' id='" + containerID + "'></div> <span class='" + hiddenInputID + "-target'></span>").insertAfter($hiddenInput);
-	var $container = $('#' + containerID) 
+	var $container = $('#' + containerID); 
 	$container.append(dayInput + '/' + monthInput + '/' + yearInput);
 	
 	$hiddenInput.hide();
@@ -26,10 +26,10 @@ function initBirthDayField(input, target, langue) {
 	automaticFocusChange($container);
   $container.find('input').change(function() {
     handleValidDateChange($(this));
-    refreshDate($hiddenInput, $container, langue);
+    refreshDate($hiddenInput, $container, 'fr');
   });
-
-}
+   }; 
+})( jQuery );
 
 function handleValidDateChange(input) {
   if (input.attr('id') == 'day') {
