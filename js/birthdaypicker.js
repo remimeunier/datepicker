@@ -7,7 +7,7 @@ var globalMonth = {
 };
 
 (function( $ ){
-  $.fn.initBirthDayField = function() {
+  $.fn.initBirthDayField = function(locale) {
 	var $hiddenInput = $(this);
 	var hiddenInputID = $hiddenInput.attr('id');
 	var containerID = hiddenInputID +'-container';
@@ -17,18 +17,18 @@ var globalMonth = {
 	var yearInput = '<input class="date-verification refresh-category" id="year" max="2099" min="1" name="year" placeholder="YYYY" type="number">';
 
 	$("<div class='container' id='" + containerID + "'></div> <span class='" + hiddenInputID + "-target'></span>").insertAfter($hiddenInput);
-	var $container = $('#' + containerID); 
+	var $container = $('#' + containerID);
 	$container.append(dayInput + '/' + monthInput + '/' + yearInput);
-	
+
 	$hiddenInput.hide();
 
 
 	automaticFocusChange($container);
   $container.find('input').change(function() {
     handleValidDateChange($(this));
-    refreshDate($hiddenInput, $container, 'fr');
+    refreshDate($hiddenInput, $container, locale);
   });
-   }; 
+   };
 })( jQuery );
 
 function handleValidDateChange(input) {
@@ -50,7 +50,7 @@ function handleValidDateChange(input) {
 	  }
 	  else if (input.val() <= date && 1 < input.val()) input.val(20 + input.val());
 	  else if ( (99 < input.val()) && (input.val() < (1900 + date))) input.val(1900 + date);
-  }	
+  }
 }
 
 function automaticFocusChange($container) {
